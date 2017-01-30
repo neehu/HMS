@@ -4,9 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="536e0dcfb47a4218b6dcbdfc80e9f493" Name="Diagram1">
-        <EntityTypeShape EntityType="HmsModel.Booking" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HmsModel.Guest" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="3339810a78a74196840af9bbf415cc5a" Name="Diagram1">
+        <EntityTypeShape EntityType="HmsModel.Booking" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="HmsModel.Guest" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HmsModel.Room" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HmsModel.Status" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <AssociationConnector Association="HmsModel.FK_Booking_Guest" ManuallyRouted="false" />
+        <AssociationConnector Association="HmsModel.FK_Booking_Room" ManuallyRouted="false" />
+        <AssociationConnector Association="HmsModel.FK_Booking_Status" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

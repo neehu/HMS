@@ -13,10 +13,10 @@ namespace HMS
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class HmsEntities : DbContext
+    public partial class HmsEntities1 : DbContext
     {
-        public HmsEntities()
-            : base("name=HmsEntities")
+        public HmsEntities1()
+            : base("name=HmsEntities1")
         {
         }
     
@@ -27,5 +27,7 @@ namespace HMS
     
         public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<Guest> Guests { get; set; }
+        public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<Status> Status { get; set; }
     }
 }

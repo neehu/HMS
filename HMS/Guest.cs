@@ -14,10 +14,18 @@ namespace HMS
     
     public partial class Guest
     {
-        public long GuestId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Guest()
+        {
+            this.Bookings = new HashSet<Booking>();
+        }
+    
+        public long GuestID { get; set; }
         public string Name { get; set; }
-        public Nullable<System.DateTime> DOJ { get; set; }
-        public string phone { get; set; }
-        public string address { get; set; }
+        public Nullable<System.DateTime> DOB { get; set; }
+        public string Phone { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Booking> Bookings { get; set; }
     }
 }

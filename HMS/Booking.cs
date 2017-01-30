@@ -14,12 +14,15 @@ namespace HMS
     
     public partial class Booking
     {
-        public long Bookingid { get; set; }
-        public string Guestid { get; set; }
-        public string Roomid { get; set; }
-        public Nullable<System.DateTime> BookingDate { get; set; }
-        public System.DateTime Checkindate { get; set; }
-        public Nullable<System.DateTime> Checkoutdate { get; set; }
-        public Nullable<long> Status { get; set; }
+        public long BookingID { get; set; }
+        public Nullable<long> GuestId { get; set; }
+        public Nullable<long> RoomId { get; set; }
+        public Nullable<System.DateTime> CheckinDate { get; set; }
+        public Nullable<System.DateTime> CheckOutDate { get; set; }
+        public long StatusId { get; set; }
+    
+        public virtual Guest Guest { get; set; }
+        public virtual Room Room { get; set; }
+        public virtual Status Status { get; set; }
     }
 }
