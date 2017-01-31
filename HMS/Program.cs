@@ -48,9 +48,7 @@ namespace HMS
             var check = from r in ctx.Rooms
                         select r;
 
-
             DateTime test = DateTime.Now.AddMonths(1);
-
 
             int index = 0;
             int index2 = 0;
@@ -64,7 +62,6 @@ namespace HMS
                 {
                     foreach (var val in month)
                     {
-
                         if (val.Room.RoomId == index2)
                         {
                             if (compareDate.CompareTo(val.CheckinDate) > 0 && compareDate.CompareTo(val.CheckOutDate) < 0)
@@ -77,24 +74,16 @@ namespace HMS
                     }
                     index++;
                 }
-
                 Console.WriteLine("The availability for Room {0} for a month is : ", index2);
                 for (int i = 0; i < 31; i++)
                 {
-
                     Console.Write(days[i]);
-
                 }
                 Console.WriteLine("");
-
             }
-                              
-                   Console.ReadKey();
-
-                    Console.WriteLine();
-                    ctx.SaveChanges();
-
-
+                Console.ReadKey();
+                Console.WriteLine();
+                ctx.SaveChanges();
                 }
             }
         }

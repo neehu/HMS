@@ -8,3 +8,6 @@ C:\Users\Neeharika.Pathuri\Documents\HelloWorld\HMS\HMS\bin\Debug\EntityFramewor
 C:\Users\Neeharika.Pathuri\Documents\HelloWorld\HMS\HMS\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Neeharika.Pathuri\Documents\HelloWorld\HMS\HMS\obj\Debug\HMS.exe
 C:\Users\Neeharika.Pathuri\Documents\HelloWorld\HMS\HMS\obj\Debug\HMS.pdb
+C:\Users\Neeharika.Pathuri\Documents\HMS1\HMS\bin\Debug\HMS.exe.config
+C:\Users\Neeharika.Pathuri\Documents\HMS1\HMS\obj\Debug\HMS.exe
+C:\Users\Neeharika.Pathuri\Documents\HMS1\HMS\obj\Debug\HMS.pdb
