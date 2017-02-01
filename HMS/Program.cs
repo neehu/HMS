@@ -10,83 +10,86 @@ namespace HMS
     {
         static void Main(string[] args)
         {
-            //Guest
-            var ctx = new HmsEntities1();
-            Console.WriteLine("Enter the guest id");
-            var id = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Enter the guest name");
-            var name = Console.ReadLine();
-            Console.WriteLine("Enter the DOB");
-            var dob = Convert.ToDateTime(Console.ReadLine());
-            Console.WriteLine("Enter the PHONE");
-            var phone = Console.ReadLine();
-            var guest = new Guest() { GuestID = id, Name = name, DOB = dob, Phone = phone };
-            ctx.Guests.Add(guest);
-
-            Console.WriteLine("Enter the id of guest to be removed ");
-            var ID = Convert.ToInt16(Console.ReadLine());
-            var result = from id1 in ctx.Guests
-                         where id1.GuestID == ID
-                         select id;
-            //foreach (var result2 in result)
-            //    ctx.Guests.Remove(Convert.ToString(result2));
-
-            //BOOKING
-
-            Console.WriteLine("Enter the Check In Date:");
-            DateTime ArrivalDate = Convert.ToDateTime(Console.ReadLine());
-            Console.WriteLine("Enter the Check Out Date:");
-            DateTime DepartureDate = Convert.ToDateTime(Console.ReadLine());
-            
-            var insert = new Booking() { CheckinDate = ArrivalDate, CheckOutDate = DepartureDate };
-            ctx.Bookings.Add(insert);
-
-            var month = from bookings in ctx.Bookings
-                        where bookings.StatusId !=1
-                        select bookings;
-
-            var check = from r in ctx.Rooms
-                        select r;
-
-            DateTime test = DateTime.Now.AddMonths(1);
-
-            int index = 0;
-            int index2 = 0;
-            foreach (var value in check)
+            Program pointerTo = new Program();
+            List<DailyReport> report = new List<DailyReport>();
+            report = pointerTo.DailyRoomsReport();
+            foreach (var element in report)
             {
+                Console.WriteLine("Date:");
+                Console.WriteLine(Convert.ToString(element.Day));
+                Console.WriteLine("RoomID:");
+                Console.WriteLine(Convert.ToString(element.RoomId));
+                Console.WriteLine(element.Status);
+            }
+            Console.ReadKey();
 
-                DateTime[] days = new DateTime[31];
-                index2++;
-                index = 0;
-                for (DateTime compareDate = DateTime.Now; compareDate <= test; compareDate = compareDate.AddDays(1))
-                {
-                    foreach (var val in month)
-                    {
-                        if (val.Room.RoomId == index2)
-                        {
-                            if (compareDate.CompareTo(val.CheckinDate) > 0 && compareDate.CompareTo(val.CheckOutDate) < 0)
-                                compareDate = compareDate.AddDays(1);
-                            else
-                                break;
-                        }
-                        else
-                            days[index] = compareDate;
-                    }
-                    index++;
-                }
-                Console.WriteLine("The availability for Room {0} for a month is : ", index2);
-                for (int i = 0; i < 31; i++)
-                {
-                    Console.Write(days[i]);
-                }
-                Console.WriteLine("");
-            }
-                Console.ReadKey();
-                Console.WriteLine();
-                ctx.SaveChanges();
-                }
-            }
         }
-    
+
+        public void AddGuest(string name, DateTime dob, string phone)
+        {
+            var ctx = new HmsEntities1();
+            var guest = new Guest() { Name = name, DOB = dob, Phone = phone };
+            ctx.Guests.Add(guest);
+            ctx.SaveChanges();
+        }
+
+        public void RemoveGuest(int guestId)
+        {
+            var ctx = new HmsEntities1();
+            var bookingsToBeRemove = ctx.Booking.Where(o => o.GuestId == guestId).ToArray();
+            ctx.Booking.RemoveRange(bookingsToBeRemove);
+            var guestToRemove = ctx.Guests.Where(o => o.GuestID == guestId).FirstOrDefault();
+            if (guestToRemove != null)
+            {
+                ctx.Guests.Remove(guestToRemove);
+            }
+            ctx.SaveChanges();
+        }
+
+        public List<DailyReport> DailyRoomsReport()
+        {
+            var ctx = new HmsEntities1();
+            var result = new List<DailyReport>();
+
+            foreach (var room in ctx.Rooms.OrderBy(o => o.RoomId))
+            {
+                for (var day = DateTime.Today; day <= DateTime.Today.AddMonths(1); day=day.AddDays(1))
+                {
+                    var dailyReport = new DailyReport() { RoomId = room.RoomId, Day = day };
+                    dailyReport.Status = getRoomStatus(ctx, dailyReport.RoomId, dailyReport.Day);
+                    result.Add(dailyReport);
+                }
+            }
+
+            return result;
+        }
+
+        public string getRoomStatus(HmsEntities1 ctx, long roomId, DateTime day)
+        {
+
+            var currentBooking = ctx.Booking.Where(p => !(p.CheckinDate >= day && p.CheckOutDate <= day))
+                                   .Where(p => p.RoomId == roomId).ToList();
+            if (currentBooking.Count() > 1)
+            {
+                return "Conflict";
+            }
+            if (currentBooking.Count() == 1)
+            {
+                return "Available";
+            }
+            else
+                return "NotAvailable";
+
+        }
+    }
+
+    public class DailyReport
+    {
+        public long RoomId { get; set; }
+        public string Status { get; set; }
+        public DateTime Day { get; set; }
+    }
+}
+
 
 
